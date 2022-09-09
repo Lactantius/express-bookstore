@@ -22,17 +22,22 @@ describe("Book routes test", () => {
     const book1 = await Book.create(testBook);
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
     await db.end();
   });
 
   test("can get list of books", async () => {
     const res = await request(app).get("/books");
-
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual({
       books: [testBook],
     });
+  });
+
+  test("can get one book", async () => {
+    const res = await request(app).get("/books/978-etc");
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toEqual({ book: testBook });
   });
 });
 
