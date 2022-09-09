@@ -1,7 +1,7 @@
 /** Database config for database. */
 
-const { Client } = require("pg");
-const { DB_URI } = require("./config");
+import { Client } from "pg";
+import { DB_URI } from "./config";
 
 let db = new Client({
   connectionString: DB_URI,

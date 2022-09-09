@@ -1,19 +1,19 @@
 /** Express app for bookstore. */
 
 
-const express = require("express");
+import express, { NextFunction } from "express";
 const app = express();
 
 app.use(express.json());
 
-const ExpressError = require("./expressError")
-const bookRoutes = require("./routes/books");
+import ExpressError from "./expressError";
+import bookRoutes from "./routes/books";
 
 app.use("/books", bookRoutes);
 
 /** 404 handler */
 
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   const err = new ExpressError("Not Found", 404);
   return next(err);
 });
@@ -21,7 +21,7 @@ app.use(function (req, res, next) {
 
 /** general error handler */
 
-app.use(function(err, req, res, next) {
+app.use(function (err: ExpressError, req: any, res: any, next: NextFunction) {
   res.status(err.status || 500);
 
   return res.json({
@@ -31,4 +31,4 @@ app.use(function(err, req, res, next) {
 });
 
 
-module.exports = app;
+export default app;

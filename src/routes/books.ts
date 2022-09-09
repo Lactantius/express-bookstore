@@ -1,7 +1,7 @@
 import { Router } from "express";
 import jsonschema from "jsonschema";
 
-const Book = require("../models/book");
+import Book from "../models/book";
 
 const router = Router();
 
@@ -9,7 +9,7 @@ const router = Router();
 
 router.get("/", async function (req, res, next) {
   try {
-    const books = await Book.findAll(req.query);
+    const books = await Book.findAll();
     return res.json({ books });
   } catch (err) {
     return next(err);
@@ -60,4 +60,4 @@ router.delete("/:isbn", async function (req, res, next) {
   }
 });
 
-module.exports = router;
+export default router;
