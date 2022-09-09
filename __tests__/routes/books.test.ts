@@ -25,9 +25,23 @@ describe("Book routes test", () => {
   });
 
   test("can get list of books", async () => {
-    const response = await request(app).get("/books");
+    const res = await request(app).get("/books");
 
-    expect(response.statusCode).toBe(200);
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toEqual({
+      books: [
+        {
+          amazon_url: "https://amazon.com/test_book",
+          author: "Lector Scriptor",
+          isbn: "978-etc",
+          language: "English",
+          pages: 500,
+          publisher: "Penguin",
+          title: "Test Book",
+          year: 2015,
+        },
+      ],
+    });
   });
 });
 
