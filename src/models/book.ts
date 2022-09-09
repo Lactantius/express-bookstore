@@ -1,7 +1,18 @@
-const db = require("../db");
+import db from "../db";
 
 
 /** Collection of related methods for books. */
+
+interface BookData {
+  isbn: string;
+  amazon_url: string;
+  author: string;
+  language: string;
+  pages: number;
+  publisher: string;
+  title: string;
+  year: number;
+}
 
 class Book {
   /** given an isbn, return book data with that isbn:
@@ -10,9 +21,9 @@ class Book {
    *
    **/
 
-  static async findOne(isbn) {
+  static async findOne(isbn: string) {
     const bookRes = await db.query(
-        `SELECT isbn,
+      `SELECT isbn,
                 amazon_url,
                 author,
                 language,
@@ -39,7 +50,7 @@ class Book {
 
   static async findAll() {
     const booksRes = await db.query(
-        `SELECT isbn,
+      `SELECT isbn,
                 amazon_url,
                 author,
                 language,
@@ -61,7 +72,7 @@ class Book {
    *
    * */
 
-  static async create(data) {
+  static async create(data: BookData) {
     const result = await db.query(
       `INSERT INTO books (
             isbn,
@@ -104,7 +115,7 @@ class Book {
    *
    * */
 
-  static async update(isbn, data) {
+  static async update(isbn: string, data: BookData) {
     const result = await db.query(
       `UPDATE books SET 
             amazon_url=($1),
@@ -144,12 +155,12 @@ class Book {
 
   /** remove book with matching isbn. Returns undefined. */
 
-  static async remove(isbn) {
+  static async remove(isbn: string) {
     const result = await db.query(
       `DELETE FROM books 
          WHERE isbn = $1 
          RETURNING isbn`,
-        [isbn]);
+      [isbn]);
 
     if (result.rows.length === 0) {
       throw { message: `There is no book with an isbn '${isbn}`, status: 404 }

@@ -1,8 +1,9 @@
-const express = require("express");
+import { Router } from "express";
+import jsonschema from "jsonschema";
+
 const Book = require("../models/book");
 
-const router = new express.Router();
-
+const router = Router();
 
 /** GET / => {books: [book, ...]}  */
 

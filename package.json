@@ -1,7 +1,7 @@
 {
   "name": "bookstore-solution",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "dist/server.js",
   "scripts": {
     "test": "jest --coverage -i",
     "start": "node dist/server.js",
