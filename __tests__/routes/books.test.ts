@@ -60,4 +60,20 @@ describe("Book routes test", () => {
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual({ message: "Book deleted" });
   });
+
+  /* validations */
+
+  test("validations prevent book from being added with incorrect JSON", async () => {
+    const res = await request(app)
+      .post("/books")
+      .send({ book: "invalid json" });
+    expect(res.statusCode).toBe(400);
+  });
+
+  test("validations prevent book from being added with incorrect JSON", async () => {
+    const res = await request(app)
+      .put("/books/978-etc")
+      .send({ book: "invalid json" });
+    expect(res.statusCode).toBe(400);
+  });
 });
