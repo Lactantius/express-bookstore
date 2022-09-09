@@ -5,19 +5,21 @@ import db from "../../src/db";
 import Book from "../../src/models/book";
 
 describe("Book routes test", () => {
+  const testBook = {
+    isbn: "978-etc",
+    amazon_url: "https://amazon.com/test_book",
+    author: "Lector Scriptor",
+    language: "English",
+    pages: 500,
+    publisher: "Penguin",
+    title: "Test Book",
+    year: 2015,
+  };
+
   beforeEach(async () => {
     await db.query("DELETE FROM books");
 
-    const book1 = await Book.create({
-      isbn: "978-etc",
-      amazon_url: "https://amazon.com/test_book",
-      author: "Lector Scriptor",
-      language: "English",
-      pages: 500,
-      publisher: "Penguin",
-      title: "Test Book",
-      year: 2015,
-    });
+    const book1 = await Book.create(testBook);
   });
 
   afterEach(async () => {
@@ -29,18 +31,7 @@ describe("Book routes test", () => {
 
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual({
-      books: [
-        {
-          amazon_url: "https://amazon.com/test_book",
-          author: "Lector Scriptor",
-          isbn: "978-etc",
-          language: "English",
-          pages: 500,
-          publisher: "Penguin",
-          title: "Test Book",
-          year: 2015,
-        },
-      ],
+      books: [testBook],
     });
   });
 });
