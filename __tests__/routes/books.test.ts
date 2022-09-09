@@ -54,4 +54,10 @@ describe("Book routes test", () => {
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual({ book: bookEdits });
   });
+
+  test("can delete a book", async () => {
+    const res = await request(app).delete("/books/978-etc");
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toEqual({ message: "Book deleted" });
+  });
 });
