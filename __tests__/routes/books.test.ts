@@ -18,7 +18,6 @@ describe("Book routes test", () => {
 
   beforeEach(async () => {
     await db.query("DELETE FROM books");
-
     const book1 = await Book.create(testBook);
   });
 
@@ -39,12 +38,20 @@ describe("Book routes test", () => {
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual({ book: testBook });
   });
+
+  test("can add a book", async () => {
+    const newBook = { ...testBook };
+    newBook.isbn = "978-alt";
+    const res = await request(app).post("/books").send(newBook);
+    expect(res.statusCode).toBe(201);
+    expect(res.body).toEqual({ book: newBook });
+  });
+
+  test("can edit a book", async () => {
+    const bookEdits = { ...testBook };
+    bookEdits.amazon_url = "https://amazon.com/new_url";
+    const res = await request(app).put("/books/978-etc").send(bookEdits);
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toEqual({ book: bookEdits });
+  });
 });
-
-// describe("GET /books", () => {
-//   test("can get list of books", async () => {
-//     const response = await request(app).get("/books");
-
-//     expect(response.statusCode).toBe(200);
-//   });
-// });
